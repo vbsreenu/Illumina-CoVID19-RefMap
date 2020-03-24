@@ -1,11 +1,11 @@
 # Illumina-CoVID19-RefMap
 
-### Remover PCR Primers
+### Remove PCR Primers
 
-Illumina sequencing is done using PCR amplicons. We have to remove PCR primers before doing any processing of the data. Depending on the priomer scheme,
-either ywe have [V1](https://raw.githubusercontent.com/artic-network/artic-ncov2019/master/primer_schemes/nCoV-2019/V1/nCoV-2019.tsv)  primers or [V2](https://raw.githubusercontent.com/artic-network/artic-ncov2019/master/primer_schemes/nCoV-2019/V2/nCoV-2019.tsv) primers in the fastq sequences.
+Illumina sequencing is done using PCR amplicons. We have to remove PCR primers before doing any processing of the data. Depending on the primer scheme,
+either we have [V1](https://raw.githubusercontent.com/artic-network/artic-ncov2019/master/primer_schemes/nCoV-2019/V1/nCoV-2019.tsv)  primers or [V2](https://raw.githubusercontent.com/artic-network/artic-ncov2019/master/primer_schemes/nCoV-2019/V2/nCoV-2019.tsv) primers in the fastq sequences.
 
-The program cutadapt (with -b option for primers) is use for removing primers. There is an automated script available on alpha server to process fastq files. It can be used for V1 and V2 primer schemes. If a new primer scheme is used, those primer sequences should be added to this script. 
+The program cutadapt (with -b option for primers) is used for removing primers. There is an automated script available on the alpha server to process fastq files. It can be used for V1 and V2 primer schemes. If a new primer scheme is used, those primer sequences should be added to this script. 
 
 Usage is:
 ```
@@ -48,7 +48,7 @@ SameerReport-Small file.sam
 
 ### Data for Climb upload
 
-For phylogenetic analysis, ARTIC consortium is asking consensus sequence and only mapped reads in sorted bam file. 
+For phylogenetic analysis, ARTIC consortium is asking consensus sequence and only mapped reads in a sorted bam file. 
 
 We have to strip LabIDs from file names and also from sam files. In below command we are removing comment line from sam header i.e "@CO:", printing only mapped reads and converting them to sorted bam file.
 
@@ -58,7 +58,7 @@ Sam fie comment header has command line arguements which sometimes contain origi
 grep -v "^@CO" file.sam|samtools view -F4 -bS  - |samtools sort  -o  file.bam 
 ```
 
-Finally, prepare the data for  CLIMB upload. Lab codes from the file names should be stripped of before uploading. Consensus sequence and mapped reads in sorted bam format should be stored in respective directories.
+Finally, prepare the data for  CLIMB upload. LabIDs from the file names should be stripped before uploading. Consensus sequence and mapped reads in sorted bam format should be stored in respective directories.
 I have created a script to copy and process data for upload. Pease change the code as per your directory structure
 
 In below example. My analysis directory is "/home4/nCov/Sreenu/batch7b" and CLIMB upload directory is "/home4/nCov/Sreenu/ClimbData/CVR-Illumina-Batch7b/"
@@ -76,4 +76,4 @@ rm renameConsensus.sh
 
 This copies bam and consensus files to  /home4/nCov/Sreenu/ClimbData/CVR-Illumina-Batch7b folder, renames them and chnages the consensus fasta header appropriately
 
-Upload this entire folder to CLIMB
+Upload this entire folder to CLIMB. [Instruction can be found here]((https://docs.covid19.climb.ac.uk/upload-instructions)
